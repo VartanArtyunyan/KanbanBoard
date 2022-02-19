@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-ws2021-gruppe-17",
+  "version": "1.0.0",
+  "description": "[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=6612447&assignment_repo_type=AssignmentRepo)\r # Kanban Board",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Prog3-FHWS/portfolio-ws2021-gruppe-17.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Prog3-FHWS/portfolio-ws2021-gruppe-17/issues"
+  },
+  "homepage": "https://github.com/Prog3-FHWS/portfolio-ws2021-gruppe-17#readme",
+  "dependencies": {
+    "@angular/animations": "^13.2.2",
+    "@angular/cdk": "^13.2.2",
+    "@angular/material": "^13.2.2"
+  }
+}

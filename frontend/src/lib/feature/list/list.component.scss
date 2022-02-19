@@ -1,0 +1,45 @@
+.navigationContainer {
+  margin: 18px 10px;
+  flex: 1;
+  display: flex;
+  align-self: center;
+}
+.content {
+  font-weight: 400;
+  font-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delete-icon {
+  height: 20px;
+  color: rgb(254, 254, 254);
+  margin-right: 5px;
+}
+
+.changeListName {
+  margin: 0px 5px;
+  height: 20px;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: large;
+  width: 50%;
+  border-style: none;
+}
+.content:hover {
+  border-color: black;
+}
+.content:focus {
+  border-style: none;
+}
+
+.count {
+  align-items: center;
+  font-size: large;
+  margin-right: 5px;
+  margin-bottom: 0;
+}
+::placeholder {
+  color: lightgray;
+  opacity: 1;
+}
