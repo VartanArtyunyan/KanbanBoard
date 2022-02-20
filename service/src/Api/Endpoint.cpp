@@ -51,6 +51,7 @@ void Endpoint::registerRoutes() {
             switch (req.method) {
 
             case HTTPMethod::Post: {
+
                 jsonColumn = manager.postReminder(listID, req.body);
                 break;
             }
@@ -95,14 +96,16 @@ void Endpoint::registerRoutes() {
             res.end();
         });
 
-    CROW_ROUTE(app, "/api/reminder/list/<int>/reminder<int>")
+    CROW_ROUTE(app, "/api/reminder/list/<int>/reminder/<int>")
         .methods("PUT"_method, "DELETE"_method)([this](const request &req, response &res, int listID, int reminderID) {
             std::string jsonColumn = "{}";
 
             switch (req.method) {
 
             case HTTPMethod::Put: {
+
                 jsonColumn = manager.putReminder(listID, reminderID, req.body);
+
                 break;
             }
             case HTTPMethod::Delete: {

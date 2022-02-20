@@ -24,16 +24,16 @@ export class BoardComponent implements OnInit{
 
     this.backendService.loadBoard().subscribe((board)=>(this.board = board));
 
-    if(this.board==null){
-      this.board = {
-        title:"Reminder",
-        Lists:[],
-        flagged:{id: 10001, name:"Flagged", position: 1000, reminders:[], length:0},
-        today: {id:10002, name:"Today", position:1001, reminders:[], length:0},
+  //  if(this.board==null){
+  //    this.board = {
+  //      title:"Reminder",
+  //      Lists:[],
+  //      flagged:{id: 10001, name:"Flagged", position: 1000, reminders:[], length:0},
+   //     today: {id:10002, name:"Today", position:1001, reminders:[], length:0},
 
-      }
+  //    }
 
-    }
+  //  }
 
   //  if(this.board == null){
   //    this.board = {
@@ -51,11 +51,14 @@ export class BoardComponent implements OnInit{
  // }
 
 
- // for(let List of this.board.Lists){
- //   for(let Reminder of List.reminders){
- //       this.todayFilter(Reminder);
-//    }
-//}
+  for(let List of this.board.Lists){
+    for(let Reminder of List.reminders){
+        this.todayFilter(Reminder);
+        if(Reminder.flagged == true){
+          this.board.flagged.reminders.push(Reminder);
+        }
+    }
+}
 
 }
 
@@ -68,7 +71,7 @@ export class BoardComponent implements OnInit{
   addList():void{
     const newList: List = {
 
-      id: Math.random()*10000|0,
+     // id: Math.random()*10000|0,
       name:"",
       position: 0,
       reminders: [],
@@ -81,7 +84,7 @@ export class BoardComponent implements OnInit{
     this.newListIndex=this.board.Lists.push(newList)-1;
     newList.position= this.newListIndex === 0
       ? 1
-      :this.board.Lists[this.newListIndex].position + 1;
+      :this.board.Lists[this.newListIndex-1].position + 1;
 
     this.backendService.createList(newList).subscribe((list)=> {
       newList.id = list.id
@@ -91,7 +94,7 @@ export class BoardComponent implements OnInit{
 
   addReminder(){
     const newReminder: Reminder={
-      remId: Math.random()*10000|0,
+      //remId: Math.random()*10000|0,
       title:"",
       date: null,
       position: 0,

@@ -51,7 +51,7 @@ export class BackendService {
     };
 
     return this.httpClient.post<Reminder>(
-      this.url + '/api/reminder/list/' + id + '/reminder/',
+      this.url + '/api/reminder/list/' + id + '/reminder',
       reminderPayload
     );
   }

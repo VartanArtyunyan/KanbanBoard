@@ -126,7 +126,7 @@ std::optional<List> SQLiteRepository::postList(std::string name, int position) {
 
     if (SQLITE_OK == result) {
         int listID = sqlite3_last_insert_rowid(database);
-        return getList(listID);
+        return List(listID, name, position);
     }
 
     return std::nullopt;
@@ -222,7 +222,7 @@ std::optional<Remind> SQLiteRepository::putRemind(int listID, int reminderID, st
     int flag = flagged ? 1 : 0;
 
     string sqlQuery =
-        "UPDATE reminder SET name = '" + name + "', date = '" + date + "', flagged = " + to_string(flag) + " WHERE item.column_id = " + to_string(listID) + "AND reminder.id = " + to_string(reminderID);
+        "UPDATE reminder SET name = '" + name + "', date = '" + date + "', flagged = " + to_string(flag) + " WHERE reminder.list_id = " + to_string(listID) + " AND reminder.id = " + to_string(reminderID);
 
     int result = 0;
     char *errorMessage = nullptr;

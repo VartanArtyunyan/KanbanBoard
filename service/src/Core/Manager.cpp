@@ -63,6 +63,8 @@ std::string Manager::postReminder(int listID, std::string request) {
 
     Remind reminder = parsedReminderOptional.value();
     std::optional<Remind> postetRemind = repository.postRemind(listID, reminder.getName(), reminder.getPosition(), reminder.getDatum(), reminder.isFlagged());
+
+    std::cout << "manager post Remind:" << parser.convertToApiString(postetRemind.value()) << std::endl;
     if (postetRemind) {
         return parser.convertToApiString(postetRemind.value());
     } else {

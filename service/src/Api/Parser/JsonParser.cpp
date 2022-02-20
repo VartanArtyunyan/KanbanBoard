@@ -39,33 +39,25 @@ rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Docu
     Value jsonBoard(kObjectType);
     Value jsonLists(kArrayType);
 
-    Value flagged(kObjectType);
-    Value emptyFlaggarray(kArrayType);
-
-    Value today(kObjectType);
-    Value emptyTodayArray(kArrayType);
-
-    flagged.AddMember("id", 10000, allocator);
-    flagged.AddMember("name", Value("flagged", allocator), allocator);
-    flagged.AddMember("position", 10000, allocator);
-    flagged.AddMember("reminder", emptyFlaggarray, allocator);
-    flagged.AddMember("length", 0, allocator);
-
-    today.AddMember("id", 10001, allocator);
-    today.AddMember("name", Value("today", allocator), allocator);
-    today.AddMember("position", 10001, allocator);
-    today.AddMember("reminder", emptyTodayArray, allocator);
-    today.AddMember("length", 0, allocator);
-
     for (List &column : board.getList()) {
         Value jsonColumn = getJsonValueFromModel(column, allocator);
         jsonLists.PushBack(jsonColumn, allocator);
     }
 
+    List FlaggedList(10000, "flagged", 10000);
+
+    for (List l : board.getList()) {
+        for (Remind r : l.getReminder()) {
+            if (r.isFlagged()) {
+                FlaggedList.addReminder(r);
+            }
+        }
+    }
+
     jsonBoard.AddMember("title", Value(board.getTitle().c_str(), allocator), allocator);
     jsonBoard.AddMember("Lists", jsonLists, allocator);
-    jsonBoard.AddMember("flagged", flagged, allocator);
-    jsonBoard.AddMember("today", today, allocator);
+    jsonBoard.AddMember("flagged", getJsonValueFromModel(FlaggedList, allocator), allocator);
+    jsonBoard.AddMember("today", getJsonValueFromModel(List(10001, "today", 10001), allocator), allocator);
 
     return jsonBoard;
 }
@@ -142,7 +134,16 @@ std::optional<Remind> JsonParser::converToRemindModel(int reminderId, std::strin
     if (true == isValidRemind(document)) {
         std::string name = document["title"].GetString();
         int position = document["position"].GetInt();
-        std::string date = document["date"].GetString();
+
+        std::string date;
+
+        if (document["date"].IsString()) {
+            date = document["date"].GetString();
+        } else {
+            date = "";
+        }
+
+        // std::string date = document["date"].GetString();
         bool flag = document["flagged"].GetBool();
         resultRemind = Remind(reminderId, name, position, date, flag);
     }
@@ -179,9 +180,9 @@ bool JsonParser::isValidRemind(rapidjson::Document const &document) {
     if (false == document["position"].IsInt()) {
         isValid = false;
     }
-    if (false == document["date"].IsString()) {
-        isValid = false;
-    }
+    // if (false == document["date"].is) {
+    //      isValid = false;
+    //  }
     if (false == document["flagged"].IsBool()) {
         isValid = false;
     }

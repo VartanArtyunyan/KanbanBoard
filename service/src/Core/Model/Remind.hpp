@@ -16,6 +16,7 @@ class Remind {
     int getPosition() const;
     std::string getDatum() const;
     bool isFlagged() const;
+    bool isToday();
 
     void setID(int givenID);
     void setName(std::string givenName);
