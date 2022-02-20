@@ -7,6 +7,8 @@
 #include "Repository/SQLiteRepository.hpp"
 #include "crow.h"
 
+#include "Repository/RepositoryIf.hpp"
+
 int main() {
     crow::SimpleApp crowApplication;
     Reminder::Repository::SQLiteRepository sqliteRepository;
@@ -16,6 +18,6 @@ int main() {
     Reminder::Api::Endpoint endpoint(crowApplication, manager);
 
     crowApplication.port(8080)
-        //        .multithreaded()
+        .multithreaded()
         .run();
 }
