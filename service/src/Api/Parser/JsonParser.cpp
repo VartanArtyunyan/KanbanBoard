@@ -38,7 +38,24 @@ string JsonParser::convertToApiString(std::vector<List> &lists) {
 rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Document::AllocatorType &allocator) {
     Value jsonBoard(kObjectType);
     Value jsonLists(kArrayType);
-    Value emptyList(kArrayType);
+
+    Value flagged(kObjectType);
+    Value emptyFlaggarray(kArrayType);
+
+    Value today(kObjectType);
+    Value emptyTodayArray(kArrayType);
+
+    flagged.AddMember("id", 10000, allocator);
+    flagged.AddMember("name", Value("flagged", allocator), allocator);
+    flagged.AddMember("position", 10000, allocator);
+    flagged.AddMember("reminder", emptyFlaggarray, allocator);
+    flagged.AddMember("length", 0, allocator);
+
+    today.AddMember("id", 10001, allocator);
+    today.AddMember("name", Value("today", allocator), allocator);
+    today.AddMember("position", 10001, allocator);
+    today.AddMember("reminder", emptyTodayArray, allocator);
+    today.AddMember("length", 0, allocator);
 
     for (List &column : board.getList()) {
         Value jsonColumn = getJsonValueFromModel(column, allocator);
@@ -46,9 +63,9 @@ rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Docu
     }
 
     jsonBoard.AddMember("title", Value(board.getTitle().c_str(), allocator), allocator);
-    jsonBoard.AddMember("lists", jsonLists, allocator);
-    jsonBoard.AddMember("flagged", emptyList, allocator);
-    jsonBoard.AddMember("today", emptyList, allocator);
+    jsonBoard.AddMember("Lists", jsonLists, allocator);
+    jsonBoard.AddMember("flagged", flagged, allocator);
+    jsonBoard.AddMember("today", today, allocator);
 
     return jsonBoard;
 }
@@ -59,7 +76,7 @@ rapidjson::Value JsonParser::getJsonValueFromModel(List const &list, rapidjson::
     jsonList.AddMember("id", list.getId(), allocator);
     jsonList.AddMember("name", Value(list.getName().c_str(), allocator), allocator);
     jsonList.AddMember("position", list.getPosition(), allocator);
-    jsonList.AddMember("size", list.getSize(), allocator);
+    jsonList.AddMember("length", list.getSize(), allocator);
 
     Value jsonReminders(kArrayType);
 
@@ -85,8 +102,8 @@ string JsonParser::convertToApiString(Remind &reminder) {
 rapidjson::Value JsonParser::getJsonValueFromModel(Remind const &reminder, rapidjson::Document::AllocatorType &allocator) {
     Value jsonRemind(kObjectType);
 
-    jsonRemind.AddMember("id", reminder.getId(), allocator);
-    jsonRemind.AddMember("name", Value(reminder.getName().c_str(), allocator), allocator);
+    jsonRemind.AddMember("remId", reminder.getId(), allocator);
+    jsonRemind.AddMember("title", Value(reminder.getName().c_str(), allocator), allocator);
     jsonRemind.AddMember("position", reminder.getPosition(), allocator);
     jsonRemind.AddMember("date", Value(reminder.getDatum().c_str(), allocator), allocator);
     jsonRemind.AddMember("flagged", reminder.isFlagged(), allocator);
@@ -123,7 +140,7 @@ std::optional<Remind> JsonParser::converToRemindModel(int reminderId, std::strin
     document.Parse(request.c_str());
 
     if (true == isValidRemind(document)) {
-        std::string name = document["name"].GetString();
+        std::string name = document["title"].GetString();
         int position = document["position"].GetInt();
         std::string date = document["date"].GetString();
         bool flag = document["flagged"].GetBool();
@@ -156,7 +173,7 @@ bool JsonParser::isValidRemind(rapidjson::Document const &document) {
     if (document.HasParseError()) {
         isValid = false;
     }
-    if (false == document["name"].IsString()) {
+    if (false == document["title"].IsString()) {
         isValid = false;
     }
     if (false == document["position"].IsInt()) {

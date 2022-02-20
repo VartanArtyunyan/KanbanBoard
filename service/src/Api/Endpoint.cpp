@@ -20,7 +20,7 @@ void Endpoint::registerRoutes() {
     CROW_ROUTE(app, "/api/reminder")
     ([this](const request &req, response &res) {
         std::string jsonAllLists = manager.getAll();
-        std::cout << jsonAllLists;
+        std::cout << jsonAllLists << std::endl;
         res.write(jsonAllLists);
         res.end();
     });
@@ -41,6 +41,26 @@ void Endpoint::registerRoutes() {
             }
 
             res.write(jsonLists);
+            res.end();
+        });
+
+    CROW_ROUTE(app, "/api/reminder/list/<int>/reminder")
+        .methods("GET"_method, "POST"_method, "PUT"_method, "DELETE"_method)([this](const request &req, response &res, int listID) {
+            std::string jsonColumn = "{}";
+
+            switch (req.method) {
+
+            case HTTPMethod::Post: {
+                jsonColumn = manager.postReminder(listID, req.body);
+                break;
+            }
+
+            default: {
+                break;
+            }
+            }
+
+            res.write(jsonColumn);
             res.end();
         });
 

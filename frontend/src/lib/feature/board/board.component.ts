@@ -21,26 +21,41 @@ export class BoardComponent implements OnInit{
   constructor(private backendService: BackendService){}
 
   ngOnInit(): void{
+
     this.backendService.loadBoard().subscribe((board)=>(this.board = board));
 
-    if(this.board == null){
+    if(this.board==null){
       this.board = {
-      title:"Reminder",
-      Lists: [
-        {id:1, name:"to do", position: 0, reminders: [{remId: 7, title: "essen",position:0, date: new Date(), flagged:false}],length:1},
-        {id:2, name: "hallo", position: 1, reminders:[{remId:8, title:"hallo", position:0, date: new Date(), flagged: false}], length: 1},
-      ],
-      flagged:{id: 10001, name:"Flagged", position: 1000, reminders:[], length:0},
-      today: {id:10002, name:"Today", position:1001, reminders:[], length:0},
+        title:"Reminder",
+        Lists:[],
+        flagged:{id: 10001, name:"Flagged", position: 1000, reminders:[], length:0},
+        today: {id:10002, name:"Today", position:1001, reminders:[], length:0},
+
+      }
+
     }
-  }
-  else{
-    this.addList();
-  }
-  for(let List of this.board.Lists){
-    for(let Reminder of List.reminders){
-        this.todayFilter(Reminder);
-    }}
+
+  //  if(this.board == null){
+  //    this.board = {
+   //  title:"Reminder",
+  //   Lists: [
+  //      {id:1, name:"to do", position: 0, reminders: [{remId: 7, title: "essen",position:0, date: new Date(), flagged:false}],length:1},
+  //      {id:2, name: "hallo", position: 1, reminders:[{remId:8, title:"hallo", position:0, date: new Date(), flagged: false}], length: 1},
+   //   ],
+  //    flagged:{id: 10001, name:"Flagged", position: 1000, reminders:[], length:0},
+  //    today: {id:10002, name:"Today", position:1001, reminders:[], length:0},
+  //  }
+//  }
+ // else{
+ //   this.addList();
+ // }
+
+
+ // for(let List of this.board.Lists){
+ //   for(let Reminder of List.reminders){
+ //       this.todayFilter(Reminder);
+//    }
+//}
 
 }
 

@@ -20,7 +20,7 @@ export class ListComponent{
 
 
 ngAfterViewInit(){
-      this.myInput.nativeElement.focus();
+    this.myInput.nativeElement.focus();
   }
  onMouseEnter(){
    this.showDeleteButton = true;
