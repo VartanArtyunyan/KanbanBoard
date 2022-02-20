@@ -22,6 +22,7 @@ export class BoardComponent implements OnInit{
 
   ngOnInit(): void{
     this.backendService.loadBoard().subscribe((board)=>(this.board = board));
+
     if(this.board == null){
       this.board = {
       title:"Reminder",
@@ -40,6 +41,7 @@ export class BoardComponent implements OnInit{
     for(let Reminder of List.reminders){
         this.todayFilter(Reminder);
     }}
+
 }
 
   selectList(list: List): void {
@@ -118,7 +120,7 @@ export class BoardComponent implements OnInit{
     this.selectedList.length--;
 
     this.backendService.deleteReminder(this.selectedList.id, id).subscribe();
-  }
+ }
 
   onShowFlagged(){
     this.selectedList= this.board.flagged;

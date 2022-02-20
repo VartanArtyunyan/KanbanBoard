@@ -19,7 +19,7 @@ Manager::~Manager() {
 }
 
 std::string Manager::getAll() {
-    std::cout << "Ich bin der get All befehl";
+
     Board board = repository.getAllLists();
 
     return parser.convertToApiString(board);
@@ -36,7 +36,7 @@ std::string Manager::getList(int listID) {
 }
 
 std::string Manager::postList(std::string request) {
-    std::cout << request;
+
     int const dummyId = -1;
     std::optional<List> parsedListOptional = parser.converToListModel(dummyId, request);
     if (false == parsedListOptional.has_value()) {
@@ -54,7 +54,7 @@ std::string Manager::postList(std::string request) {
 }
 
 std::string Manager::postReminder(int listID, std::string request) {
-    std::cout << listID << " " << request;
+
     int const dummyId = -1;
     std::optional<Remind> parsedReminderOptional = parser.converToRemindModel(dummyId, request);
     if (false == parsedReminderOptional.has_value()) {

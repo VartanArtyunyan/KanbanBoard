@@ -38,6 +38,7 @@ string JsonParser::convertToApiString(std::vector<List> &lists) {
 rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Document::AllocatorType &allocator) {
     Value jsonBoard(kObjectType);
     Value jsonLists(kArrayType);
+    Value emptyList(kArrayType);
 
     for (List &column : board.getList()) {
         Value jsonColumn = getJsonValueFromModel(column, allocator);
@@ -46,6 +47,8 @@ rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Docu
 
     jsonBoard.AddMember("title", Value(board.getTitle().c_str(), allocator), allocator);
     jsonBoard.AddMember("lists", jsonLists, allocator);
+    jsonBoard.AddMember("flagged", emptyList, allocator);
+    jsonBoard.AddMember("today", emptyList, allocator);
 
     return jsonBoard;
 }

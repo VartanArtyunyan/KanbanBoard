@@ -14,7 +14,7 @@ export class BackendService {
   constructor(private httpClient: HttpClient) {}
 
   loadBoard(): Observable<Board> {
-    return this.httpClient.get<Board>(this.url + '/reminder');
+    return this.httpClient.get<Board>(this.url + '/api/reminder');
   }
 
   createList(list: List): Observable<List> {
@@ -23,14 +23,14 @@ export class BackendService {
     };
 
     return this.httpClient.post<List>(
-      this.url + '/reminder/list',
+      this.url + '/api/reminder/list',
       listPayload
     );
   }
 
   deleteList(id: number): Observable<void> {
     return this.httpClient.delete<void>(
-      this.url + '/reminder/list/' + id
+      this.url + '/api/reminder/list/' + id
     );
   }
 
@@ -40,7 +40,7 @@ export class BackendService {
     };
 
     return this.httpClient.put<List>(
-      this.url + '/reminder/list/' + list.id,
+      this.url + '/api/reminder/list/' + list.id,
       listPayload
     );
   }
@@ -51,14 +51,14 @@ export class BackendService {
     };
 
     return this.httpClient.post<Reminder>(
-      this.url + '/reminder/list/' + id + '/reminder/',
+      this.url + '/api/reminder/list/' + id + '/reminder/',
       reminderPayload
     );
   }
 
   deleteReminder(id: number, remId: number): Observable<void> {
     return this.httpClient.delete<void>(
-      this.url + '/reminder/list/' + id + '/reminder/' + remId
+      this.url + '/api/reminder/list/' + id + '/reminder/' + remId
     );
   }
 
@@ -68,7 +68,7 @@ export class BackendService {
     };
 
     return this.httpClient.put<Reminder>(
-      this.url + '/reminder/list/' + id + '/reminder/' + reminder.remId,
+      this.url + '/api/reminder/list/' + id + '/reminder/' + reminder.remId,
       reminderPayload
     );
   }
