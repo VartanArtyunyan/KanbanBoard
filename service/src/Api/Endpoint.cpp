@@ -5,6 +5,7 @@
 using namespace Reminder::Api;
 using namespace Reminder::Core;
 using namespace crow;
+using namespace std;
 
 Endpoint::Endpoint(SimpleApp &givenApp, Manager &givenManager) : app(givenApp),
                                                                  manager(givenManager) {
@@ -15,6 +16,7 @@ Endpoint::~Endpoint() {
 }
 
 void Endpoint::registerRoutes() {
+
     CROW_ROUTE(app, "/reminder")
     ([this](const request &req, response &res) {
         std::string jsonAllLists = manager.getAll();

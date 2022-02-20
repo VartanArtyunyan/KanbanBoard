@@ -1,0 +1,48 @@
+
+<div class= "reminderContainer"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()">
+
+    <input type="checkbox"
+    (click)="onCheckboxIsPressed()" class="buttonContainer"/>
+    <div class=" dataContainer">
+      <input class="textContainer" #Input
+        type="text"
+        value="{{this.reminder.title}}"
+        (change)="editValue($event)"
+        placeholder="Insert Reminder"/>
+
+      <div class="dateContainer">
+      <mat-form-field color="accent" appearance ="outline">
+        <input class="dateInputContainer" #Date
+          matInput
+          [matDatepicker]="picker" disabled
+          [min]="startDate"
+          [(ngModel)]="this.reminder.date"
+          (dateInput)="editDate($event)"
+          (dateChange)="editDate($event)"
+          placeholder="choose date">
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+      </mat-form-field>
+       </div>
+       <div (click)="picker.open()" class="calendarContainer">
+        <img class="calendarIcon"
+        src="../../../assets/calendar-line.svg">
+      </div>
+  </div>
+  <div *ngIf= "!this.reminder.flagged" class="importantContainer">
+    <img src="../../../assets/flag-svgrepo-com (1).svg" (click)="flagReminder()" class="heart">
+  </div>
+  <div *ngIf= "this.reminder.flagged" class="importantContainer">
+    <img src="../../../assets/flag-svgrepo-com (2).svg" (click)="flagReminder()" class="heart">
+  </div>
+
+
+</div>
+
+
+
+
+
+
+

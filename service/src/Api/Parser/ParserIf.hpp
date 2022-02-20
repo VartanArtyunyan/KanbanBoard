@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Model/List.hpp"
+#include "Core/Model/Board.hpp"
 #include <optional>
 #include <string>
 #include <vector>
@@ -15,6 +15,7 @@ class ParserIf {
 
     virtual std::string getEmptyResponseString() = 0;
 
+    virtual std::string convertToApiString(Reminder::Core::Model::Board &board) = 0;
     virtual std::string convertToApiString(std::vector<Reminder::Core::Model::List> &lists) = 0;
     virtual std::string convertToApiString(Reminder::Core::Model::List &list) = 0;
     virtual std::string convertToApiString(Reminder::Core::Model::Remind &reminder) = 0;

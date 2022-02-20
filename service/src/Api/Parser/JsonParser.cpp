@@ -16,6 +16,14 @@ string JsonParser::convertToApiString(List &list) {
     return jsonValueToString(jsonList);
 }
 
+string JsonParser::convertToApiString(Board &board) {
+    Document document;
+    Document::AllocatorType &allocator = document.GetAllocator();
+
+    Value jsonBoard = getJsonValueFromModel(board, allocator);
+    return jsonValueToString(jsonBoard);
+}
+
 string JsonParser::convertToApiString(std::vector<List> &lists) {
     Document doc(kArrayType);
     Document::AllocatorType &allocator = doc.GetAllocator();
@@ -25,6 +33,21 @@ string JsonParser::convertToApiString(std::vector<List> &lists) {
         doc.PushBack(jsonList, allocator);
     }
     return jsonValueToString(doc);
+}
+
+rapidjson::Value JsonParser::getJsonValueFromModel(Board &board, rapidjson::Document::AllocatorType &allocator) {
+    Value jsonBoard(kObjectType);
+    Value jsonLists(kArrayType);
+
+    for (List &column : board.getList()) {
+        Value jsonColumn = getJsonValueFromModel(column, allocator);
+        jsonLists.PushBack(jsonColumn, allocator);
+    }
+
+    jsonBoard.AddMember("title", Value(board.getTitle().c_str(), allocator), allocator);
+    jsonBoard.AddMember("lists", jsonLists, allocator);
+
+    return jsonBoard;
 }
 
 rapidjson::Value JsonParser::getJsonValueFromModel(List const &list, rapidjson::Document::AllocatorType &allocator) {

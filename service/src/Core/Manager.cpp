@@ -20,9 +20,9 @@ Manager::~Manager() {
 
 std::string Manager::getAll() {
     std::cout << "Ich bin der get All befehl";
-    std::vector<List> lists = repository.getAll();
+    Board board = repository.getAllLists();
 
-    return parser.convertToApiString(lists);
+    return parser.convertToApiString(board);
 }
 
 std::string Manager::getList(int listID) {

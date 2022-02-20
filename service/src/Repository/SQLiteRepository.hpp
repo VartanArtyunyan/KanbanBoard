@@ -32,6 +32,7 @@ class SQLiteRepository : public RepositoryIf {
     static inline int const INVALID_ID = -1;
     static inline std::string const Title = "Reminder";
 
+    virtual Reminder::Core::Model::Board getAllLists();
     virtual std::vector<Reminder::Core::Model::List> getAll();
     virtual std::optional<Reminder::Core::Model::List> getList(int listID);
     virtual std::optional<Reminder::Core::Model::List> postList(std::string name, int position);

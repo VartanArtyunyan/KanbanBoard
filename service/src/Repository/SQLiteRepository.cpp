@@ -62,6 +62,16 @@ void SQLiteRepository::initialize() {
     // createDummyData();
 }
 
+Board SQLiteRepository::getAllLists() {
+    Board board = Board("ReminderApp");
+
+    std::vector<List> lists = getAll();
+
+    board.setLists(lists);
+
+    return board;
+}
+
 std::vector<List> SQLiteRepository::getAll() {
     std::vector<List> output;
 

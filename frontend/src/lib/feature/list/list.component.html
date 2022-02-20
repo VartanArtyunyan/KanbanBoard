@@ -1,0 +1,28 @@
+<div class="navigationContainer"
+    (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()">
+    <div class="content">
+        <img height="25px" width="25px"
+        src="../../../assets/list-svgrepo-com.svg"/>
+
+        <input
+                #myInput
+                class="changeListName"
+                type="text"
+                value="{{ this.list.name }}"
+                (change)="editValue($event)"
+                placeholder="enter list name"/>
+
+  </div>
+  <img
+         *ngIf="showDeleteButton"
+          (click)="onDeleteList()"
+          class="delete-icon"
+          src="../../../assets/delete-button.png"/>
+
+        <div class = "count">
+            {{this.list.length}}
+        </div>
+
+</div>
+

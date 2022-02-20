@@ -18,11 +18,13 @@ class JsonParser : public ParserIf {
 
     rapidjson::Value getJsonValueFromModel(Reminder::Core::Model::Remind const &reminder, rapidjson::Document::AllocatorType &allocator);
     rapidjson::Value getJsonValueFromModel(Reminder::Core::Model::List const &list, rapidjson::Document::AllocatorType &allocator);
+    rapidjson::Value getJsonValueFromModel(Reminder::Core::Model::Board &board, rapidjson::Document::AllocatorType &allocator);
 
   public:
     JsonParser(){};
     virtual ~JsonParser(){};
 
+    virtual std::string convertToApiString(Reminder::Core::Model::Board &board);
     virtual std::string convertToApiString(std::vector<Reminder::Core::Model::List> &lists);
     virtual std::string convertToApiString(Reminder::Core::Model::List &list);
     virtual std::string convertToApiString(Reminder::Core::Model::Remind &reminder);

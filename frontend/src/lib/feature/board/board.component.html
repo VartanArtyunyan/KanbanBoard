@@ -1,0 +1,78 @@
+<div class="container">
+<div class = "navigationContainer">
+  <div class = "filterContainer">
+      <div (click)="onShowToday()"class ="filterItems">
+          <img height="30px" width="30px"
+          src="../../../assets/calendar-line.svg">
+          Today
+          <div class="filterItemsCount">
+            {{this.board.today.reminders.length}}
+          </div>
+      </div>
+      <div (click)="onShowFlagged()" class="filterItems">
+        <img height="35px" width="35px"
+        src="../../../assets/flag-svgrepo-com (2).svg">
+        Flagged
+        <div class = "filterItemsCount">
+        {{this.board.flagged.reminders.length}}
+      </div>
+    </div>
+  </div>
+  <div class="font">
+    {{"Lists: "}}
+  </div>
+  <div class="listNavContainer">
+    <li class="li"  *ngFor="let List of this.board.Lists">
+    <list
+      [list] = "List"
+      (click) = "selectList(List)"
+      (deleteListEvent)="deleteList($event)"
+      [selectedOnCreate]="List == selectedList"
+     ></list>
+  </li>
+  </div>
+
+  <div (click) = "addList()" class="addListContainer">
+  <img class="addButton" src="../../../assets/add-button.svg" />
+  <div class="text">
+      add List
+</div>
+  </div>
+</div>
+
+<div class = "reminderContainer">
+  <ng-container *ngIf="selectedList">
+      <div class="reminderHeader">
+        <div >
+            {{"Name: "}}
+            {{selectedList
+              ? selectedList.name
+              : '"enter list name"'
+            }}
+        </div>
+        <div>
+            {{"Reminders: "}}
+            {{selectedList.reminders.length}}
+        </div>
+      </div>
+      <div class="reminderList">
+       <li *ngFor="let Reminder of selectedList.reminders" class="reminderItem">
+          <reminder
+            [reminder] ="Reminder"
+            [selectedOnCreate] ="Reminder == selectedReminder"
+            (onCheckboxPressed)="deleteReminder($event)"
+            (flagged) ="flagged($event)"
+            (reminderChange) = "onReminderChange($event)"
+          ></reminder>
+      </li>
+    </div>
+    <div *ngIf="selectedList != this.board.flagged && selectedList != this.board.today" class="bottomClass">
+      <div (click)="addReminder()" class="addReminderContainer">
+        <img class="addButton" src="../../../assets/add-button.svg"/>
+      </div>
+    </div>
+  </ng-container>
+</div>
+</div>
+
+
