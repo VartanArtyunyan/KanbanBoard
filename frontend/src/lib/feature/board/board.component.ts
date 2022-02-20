@@ -15,8 +15,6 @@ export class BoardComponent implements OnInit{
   selectedList?: List;
   selectedReminderList?: Reminder[];
   selectedReminder: Reminder;
-  showFlagged: boolean = false;
-  showToday: boolean = false;
   newListIndex?:number;
   newReminderIndex?:number;
 
@@ -61,6 +59,7 @@ export class BoardComponent implements OnInit{
     };
     this.selectedList = newList;
     this.selectedReminderList= newList.reminders;
+    
 
     this.newListIndex=this.board.Lists.push(newList)-1;
     newList.position= this.newListIndex === 0
@@ -110,10 +109,10 @@ export class BoardComponent implements OnInit{
     const flagIndex = this.board.flagged.reminders.findIndex((Reminder)=> Reminder.remId===id);
     const todayIndex = this.board.today.reminders.findIndex((Reminder)=> Reminder.remId===id);
     if(flagIndex != -1 && this.selectedList != this.board.flagged){
-        this.board.flagged.reminders.splice(index,1);
+        this.board.flagged.reminders.splice(flagIndex,1);
     }
     if(todayIndex != -1 && this.selectedList != this.board.today){
-        this.board.today.reminders.splice(index,1);
+        this.board.today.reminders.splice(todayIndex,1);
     }
     this.selectedList.reminders.splice(index, 1);
     this.selectedList.length--;
@@ -138,7 +137,7 @@ export class BoardComponent implements OnInit{
     let date:string;
     var date_format = new Date();
     date = date_format.getMonth +'/'+ date_format.getDay+'/'+ date_format.getFullYear;
-    let reminderDate = reminder.date.getMonth+'/'+reminder.date.getDay+'/'+reminder.date.getFullYear;
+    let reminderDate = reminder.date.getMonth+'/'+ reminder.date.getDay+'/'+ reminder.date.getFullYear;
     if(reminderDate == date && this.board.today.reminders.indexOf(reminder) == -1){
       this.board.today.reminders.push(reminder);
     }
