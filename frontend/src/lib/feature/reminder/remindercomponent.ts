@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Reminder } from 'src/lib/data-access/models/reminder';
-import { List } from 'src/lib/data-access/models/list';
-import { BackendService } from 'src/lib/data-access/service/backend.service';
+
 
 @Component({
   selector: 'reminder',
@@ -22,7 +21,7 @@ showDeleteButton: boolean= false;
 checkboxPressed: boolean = false;
 startDate = new Date();
 
-constructor(private backendService: BackendService) {}
+
 ngAfterViewInit(){
   if(this.selectedOnCreate){
     this.myInput.nativeElement.focus();
