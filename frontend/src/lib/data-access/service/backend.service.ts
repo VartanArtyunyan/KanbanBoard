@@ -30,7 +30,7 @@ export class BackendService {
 
   deleteList(id: number): Observable<void> {
     return this.httpClient.delete<void>(
-      this.url + '/reminderlist/' + id
+      this.url + '/reminder/list/' + id
     );
   }
 
