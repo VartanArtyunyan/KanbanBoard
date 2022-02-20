@@ -156,11 +156,18 @@ export class BoardComponent implements OnInit{
   todayFilter(reminder:Reminder){
     let date:string;
     var date_format = new Date();
-    date = date_format.getMonth +'/'+ date_format.getDay+'/'+ date_format.getFullYear;
-    let reminderDate = reminder.date.getMonth+'/'+ reminder.date.getDay+'/'+ reminder.date.getFullYear;
-    if(reminderDate == date && this.board.today.reminders.indexOf(reminder) == -1){
-      this.board.today.reminders.push(reminder);
-    }
+    if(date_format.getMonth == reminder.date.getMonth &&
+      date_format.getDay == reminder.date.getDay &&
+      date_format.getFullYear == reminder.date.getFullYear &&
+      this.board.today.reminders.indexOf(reminder) === -1){
+        this.board.today.reminders.push(reminder);
+      }
+
+    //date = date_format.getMonth +'/'+ date_format.getDay+'/'+ date_format.getFullYear;
+   // let reminderDate = reminder.date.getMonth+'/'+ reminder.date.getDay+'/'+ reminder.date.getFullYear;
+    //if(reminderDate === date && this.board.today.reminders.indexOf(reminder) === -1){
+    //  this.board.today.reminders.push(reminder);
+   // }
    }
 
   flagged(reminder:Reminder){
